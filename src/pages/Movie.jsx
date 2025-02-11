@@ -4,12 +4,17 @@ import NavBar from "../components/NavBar";
 
 function Movie() {
   const { id } = useParams(); // Get movie ID from URL
-  const [movie, setMovie] = useState([]);
+  const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
     fetch(`http://localhost:4000/movies/${id}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Movie not found");
+        }
+        return response.json();
+      })
       .then((data) => {
         setMovie(data);
         setLoading(false);
@@ -20,7 +25,18 @@ function Movie() {
       });
   }, [id]);
 
- 
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+
+  if (!movie) {
+    return <h1>Movie not found</h1>;
+  }
+
   return (
     <div>
       <header>
