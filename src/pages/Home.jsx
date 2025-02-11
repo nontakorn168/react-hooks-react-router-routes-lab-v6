@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MovieCard from "../components/MovieCard"; // ✅ Ensure correct import
+import MovieCard from "../components/MovieCard";
 import NavBar from "../components/NavBar";
 
 function Home() {
@@ -8,7 +8,7 @@ function Home() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:4000/movies") // ✅ Fetch movies from API
+    fetch("http://localhost:4000/movies") 
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch movies");
